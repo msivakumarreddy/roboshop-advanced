@@ -60,7 +60,7 @@ spec:
         - containerPort: 27017
         volumeMounts:
         - name: mongodb-persistent-storage
-          mountPath: /data
+          mountPath: /data/db
   volumeClaimTemplates:
   - metadata:
       name: mongodb-persistent-storage

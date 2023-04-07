@@ -4,70 +4,35 @@ kind: StorageClass
 metadata:
   name: ebs-sc
 provisioner: ebs.csi.aws.com
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
 parameters:
   type: gp2
-mountOptions:
-  - debug
-reclaimPolicy: Delete
-allowVolumeExpansion: true
-volumeBindingMode: Immediate
-# ---
-# volumeClaimTemplates:
-#   - metadata:
-#       name: mongodb-persistent-storage
-#     spec:
-#       accessModes: [ "ReadWriteOnce" ]
-#       resources:
-#         requests:
-#           storage: 10Gi
-#       storageClassName: ebs-sc
-
 ---
 apiVersion: v1
-kind: Service
+kind: PersistentVolumeClaim
 metadata:
-  name: mongodb-service
-  labels:
-    app: mongodb
+  name: my-ebs-dynamic-pvc
 spec:
-  selector:
-    app: mongodb
-  ports:
-  - name: mongodb
-    port: 27017
-    targetPort: 27017
-  clusterIP: None
+  storageClassName: ebs-sc
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 14Gi
 ---
-apiVersion: apps/v1
-kind: StatefulSet
+apiVersion: v1
+kind: Pod
 metadata:
-  name: mongodb-statefulset
+  name: my-pod
 spec:
-  serviceName: mongodb-service
-  replicas: 1
-  selector:
-    matchLabels:
-      app: mongodb
-  template:
-    metadata:
-      labels:
-        app: mongodb
-    spec:
-      containers:
-      - name: mongodb
-        image: techworldwithsiva/mongodb:v1
-        ports:
-        - containerPort: 27017
-        volumeMounts:
-        - name: mongodb-persistent-storage
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongodb-persistent-storage
-    spec:
-      accessModes: 
-        - "ReadWriteOnce"
-      resources:
-        requests:
-          storage: 10Gi
-      storageClassName: ebs-sc
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - name: my-ebs-volume
+      mountPath: /usr/share/nginx/html
+  volumes:
+  - name: my-ebs-volume
+    persistentVolumeClaim:
+      claimName: my-ebs-dynamic-pvc

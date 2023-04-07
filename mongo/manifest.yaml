@@ -62,7 +62,6 @@ spec:
   - metadata:
       name: mongodb-persistent-storage
     spec:
-      accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
           storage: 10Gi

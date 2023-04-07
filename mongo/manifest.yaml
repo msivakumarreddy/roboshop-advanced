@@ -21,17 +21,29 @@ spec:
     requests:
       storage: 14Gi
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
-  name: my-pod
+  name: mongodb-statefulset
 spec:
-  containers:
-  - name: nginx
-    image: nginx
-    volumeMounts:
-    - name: my-ebs-volume
-      mountPath: /usr/share/nginx/html
+  serviceName: mongodb-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: techworldwithsiva/mongodb:v1
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mongodb-persistent-storage
+          mountPath: /data/db
   volumes:
   - name: my-ebs-volume
     persistentVolumeClaim:

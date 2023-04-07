@@ -1,15 +1,13 @@
 ---
-kind: StorageClass
 apiVersion: storage.k8s.io/v1
+kind: StorageClass
 metadata:
-  name: efs-sc
-provisioner: efs.csi.aws.com
+  name: ebs-sc
+provisioner: ebs.csi.aws.com
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
 parameters:
-  fileSystemId: fs-06720275f39f052ec
-  provisioningMode: efs-ap
-  encrypted: "false"
-  performanceMode: generalPurpose
-  throughputMode: bursting
+  type: gp2
 # ---
 # volumeClaimTemplates:
 #   - metadata:
@@ -68,4 +66,4 @@ spec:
       resources:
         requests:
           storage: 10Gi
-      storageClassName: efs-sc
+      storageClassName: ebs-sc

@@ -6,6 +6,8 @@ metadata:
 provisioner: ebs.csi.aws.com
 reclaimPolicy: Retain
 volumeBindingMode: WaitForFirstConsumer
+accessModes:
+  - ReadWriteOnce
 parameters:
   type: gp2
 # ---

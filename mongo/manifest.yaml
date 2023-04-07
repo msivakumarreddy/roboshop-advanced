@@ -11,8 +11,6 @@ mountOptions:
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: Immediate
-accessModes:
-  - ReadWriteOnce
 # ---
 # volumeClaimTemplates:
 #   - metadata:
@@ -67,6 +65,7 @@ spec:
   - metadata:
       name: mongodb-persistent-storage
     spec:
+      accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
           storage: 10Gi

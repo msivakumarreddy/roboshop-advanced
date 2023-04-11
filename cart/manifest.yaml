@@ -30,7 +30,7 @@ spec:
       containers:
       - name: cart
         imagePullPolicy: Always
-        image: techworldwithsiva/cart:v1
+        image: techworldwithsiva/cart:v2
         envFrom:
         - configMapRef:
             name: cart-config

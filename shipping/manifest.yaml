@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: shipping-config
 data:
-  CART_ENDPOINT: "cart:80"
+  CART_ENDPOINT: "cart"
   DB_HOST: "mysql"
 ---
 apiVersion: apps/v1
@@ -30,7 +30,7 @@ spec:
       containers:
       - name: shipping
         imagePullPolicy: Always
-        image: techworldwithsiva/shipping:v1
+        image: techworldwithsiva/shipping:k8
         envFrom:
         - configMapRef:
             name: shipping-config

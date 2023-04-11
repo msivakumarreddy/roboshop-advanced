@@ -73,4 +73,4 @@ spec:
       resources:
         requests:
           storage: 1Gi
-      storageClassName: efs-sc
+      storageClassName: ebs-sc

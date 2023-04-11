@@ -21,7 +21,7 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-service
+  name: mysql
   namespace: roboshop
   labels:
     app: mysql
@@ -37,10 +37,10 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mysql-statefulset
+  name: mysql
   namespace: roboshop
 spec:
-  serviceName: mysql-service
+  serviceName: mysql
   replicas: 1
   selector:
     matchLabels:

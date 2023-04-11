@@ -55,9 +55,9 @@ data:
             #     proxy_pass http://user/;
             # }
 
-            # location /api/cart/ {
-            #   proxy_pass http://cart/;
-            # }
+            location /api/cart/ {
+              proxy_pass http://cart/;
+            }
 
             # location /api/shipping/ {
             #     proxy_pass http://shipping/;

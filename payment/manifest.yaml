@@ -31,7 +31,7 @@ spec:
       containers:
       - name: payment
         imagePullPolicy: Always
-        image: techworldwithsiva/payment:v2
+        image: techworldwithsiva/payment:k8
         envFrom:
         - configMapRef:
             name: payment-config
